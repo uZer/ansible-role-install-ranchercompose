@@ -1,0 +1,27 @@
+---
+- name: Download rancher_compose
+  unarchive:
+    src: "https://releases.rancher.com/compose/v{{ rancher_compose_version }}/rancher-compose-linux-amd64-v{{ rancher_compose_version }}.tar.gz"
+    remote_src: yes
+    dest: "/opt"
+    owner: root
+    group: root
+    mode: '0700'
+  become: yes
+  tags:
+    - docker
+    - rancher
+    - rancher_compose
+
+- name: Link rancher-compose
+  file:
+    state: link
+    force: yes
+    src: "/opt/rancher-compose-v{{ rancher_compose_version }}/rancher-compose"
+    dest: /usr/local/bin/rancher-compose
+  become: yes
+  tags:
+    - docker
+    - rancher
+    - rancher_compose
+# vim:ft=ansible:
